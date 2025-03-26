@@ -1,0 +1,34 @@
+# Wai Project: ELI5 Summary
+
+## What is Wai?
+
+Wai is like a super-smart helper that can read different types of documents stored in different places and bring all that information together for you.
+
+## What Can Wai Do Right Now?
+
+### Read from Notion
+Wai can grab text from your Notion pages. It's like having someone who can look at your Notion notes and copy the important parts for you.
+
+### Read from Google
+Wai can also read your Google Docs and Spreadsheets. It's like having a friend who can look at your documents and tell you what's inside without you having to open them yourself.
+
+### Combine Information
+The coolest part is that Wai can grab information from all these different places using the same commands. You don't need separate tools for each service!
+
+## How Does It Work?
+
+1. You tell Wai what document you want to read (like "get me that Google Doc" or "read this Notion page")
+2. Wai connects to that service (Notion or Google)
+3. Wai gets the information and shows it to you
+4. If you want, Wai can save that information to a file on your computer
+
+## What's Next?
+
+Right now, Wai is like a really good reader. In the future, it could become a super-smart assistant that not only reads but also:
+- Understands what the documents mean
+- Finds connections between different documents
+- Answers questions about your documents
+- Organizes information automatically
+- Maybe even writes new content based on what it reads
+
+Wai is just getting started, but it's already helping you access information from different sources more easily!
