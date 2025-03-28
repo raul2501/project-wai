@@ -28,11 +28,17 @@ async def test_get_document_success(mock_adapter):
     }
 
     with patch.object(mock_adapter.client, 'post', new_callable=AsyncMock) as mock_post:
-        mock_post.return_value.status_code = 200
-        mock_post.return_value.json.return_value = expected_response
+        mock_response = AsyncMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = expected_response
+        mock_post.return_value = mock_response
 
         result = await mock_adapter.get_document(test_doc_id)
         assert result == expected_response
+        mock_post.assert_awaited_once_with(
+            "/v1/documents/get",
+            json={"document_id": test_doc_id}
+        )
         mock_post.assert_called_once_with(
             "/v1/documents/get",
             json={"document_id": test_doc_id}
@@ -59,11 +65,17 @@ async def test_search_documents_success(mock_adapter):
     }
 
     with patch.object(mock_adapter.client, 'post', new_callable=AsyncMock) as mock_post:
-        mock_post.return_value.status_code = 200
-        mock_post.return_value.json.return_value = expected_response
+        mock_response = AsyncMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = expected_response
+        mock_post.return_value = mock_response
 
         result = await mock_adapter.search_documents(test_query)
         assert result == expected_response
+        mock_post.assert_awaited_once_with(
+            "/v1/documents/search",
+            json={"query": test_query}
+        )
         mock_post.assert_called_once_with(
             "/v1/documents/search",
             json={"query": test_query}

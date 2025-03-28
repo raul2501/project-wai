@@ -34,7 +34,7 @@ class GoogleDriveAdapter:
                 json={"document_id": document_id}
             )
             response.raise_for_status()
-            return response.json()
+            return await response.json()
         except Exception as e:
             raise Exception(f"Google Drive MCP error: {str(e)}")
 
