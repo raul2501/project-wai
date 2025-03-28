@@ -6,34 +6,36 @@ from typing import Dict, List, Any, Optional, Union
 from fastapi import APIRouter, HTTPException, Depends, Query
 from pydantic import BaseModel
 
-from scripts.document_processor import process_document
-from backend.ai.llama_model import LlamaModel
+from backend.integrations.mcp_client import MCPClient, MCPConfig
+from backend.ai.llama_model import AIServiceClient, AIServiceConfig
+from pydantic import BaseModel
 
 router = APIRouter()
-llama_model = None
 
+# Configuration would typically come from environment variables
+mcp_config = MCPConfig(
+    base_url="https://mcp.yourdomain.com",
+    api_key="your-mcp-api-key"
+)
+
+ai_config = AIServiceConfig(
+    base_url="https://ai.yourdomain.com",
+    api_key="your-ai-api-key"
+)
+
+mcp_client = MCPClient(mcp_config)
+ai_client = AIServiceClient(ai_config)
 
 class DocumentRequest(BaseModel):
     """Document request schema."""
-    source: str
-    doc_id: str
+    source: str  # e.g. 'google-drive'
+    params: Dict[str, Any]  # Source-specific parameters
     query: Optional[str] = None
-    range: Optional[str] = None
-
 
 class DocumentResponse(BaseModel):
     """Document response schema."""
-    content: str
+    content: Dict[str, Any]  # Raw document data
     ai_response: Optional[str] = None
-
-
-# Initialize the AI model when needed
-def get_llama_model():
-    """Get or initialize the Llama model."""
-    global llama_model
-    if llama_model is None:
-        llama_model = LlamaModel()
-    return llama_model
 
 
 @router.post("/process", response_model=DocumentResponse)
