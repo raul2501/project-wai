@@ -5,6 +5,7 @@ Provides unified interface to various MCP integrations.
 from typing import Dict, Any, Optional
 import httpx
 from pydantic import BaseModel
+from backend.integrations.google_drive import GoogleDriveConfig
 
 class MCPConfig(BaseModel):
     """Configuration for MCP service"""
