@@ -50,19 +50,13 @@ async def process_document_endpoint(request: DocumentRequest):
         Document content and AI-generated response
     """
     try:
-        # Process document from the specified source
-        content = process_document(request.source, request.doc_id, range=request.range)
-        
-        # Format content as string if it's not already
-        if isinstance(content, list):
-            formatted_content = "\n".join([", ".join(map(str, row)) for row in content])
-        else:
-            formatted_content = content
+        # Get document from MCP service
+        doc_data = await mcp_client.get_documents(request.source, request.params)
+        content = doc_data.get('content', '')
         
         # Generate AI response if content was retrieved successfully
-        if formatted_content:
-            model = get_llama_model()
-            ai_response = model.process_documents([formatted_content], request.query)
+        if content:
+            ai_response = await ai_client.process_documents([content], request.query)
         else:
             ai_response = "No content to analyze"
         
@@ -91,22 +85,16 @@ async def batch_process_documents(requests: List[DocumentRequest]):
         
         # Process each document
         for request in requests:
-            content = process_document(request.source, request.doc_id, range=request.range)
+            doc_data = await mcp_client.get_documents(request.source, request.params)
+            content = doc_data.get('content', '')
             
-            # Format content as string if it's not already
-            if isinstance(content, list):
-                formatted_content = "\n".join([", ".join(map(str, row)) for row in content])
-            else:
-                formatted_content = content
-            
-            if formatted_content:
-                documents.append(formatted_content)
+            if content:
+                documents.append(content)
         
         # Generate combined AI response
         if documents:
-            model = get_llama_model()
             query = requests[0].query if requests and requests[0].query else None
-            ai_response = model.process_documents(documents, query)
+            ai_response = await ai_client.process_documents(documents, query)
         else:
             ai_response = "No content to analyze"
         
