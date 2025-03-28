@@ -2,6 +2,7 @@
 Tests for MCP client integration.
 """
 import pytest
+import pytest_asyncio
 from unittest.mock import AsyncMock, patch
 from backend.integrations.mcp_client import MCPClient, MCPConfig
 from backend.integrations.google_drive import GoogleDriveAdapter
