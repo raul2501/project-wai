@@ -16,7 +16,8 @@ openai>=1.0.0  # Or your preferred AI service SDK
 pytest>=7.0.0
 pytest-asyncio>=0.23.0
 httpx>=0.25.0
-anyio>=3.0.0  # Required for async test support
+anyio>=3.0.0
+trio>=0.22.0  # Required for pytest-asyncio
 
 # Code formatting and linting
 black>=23.0.0

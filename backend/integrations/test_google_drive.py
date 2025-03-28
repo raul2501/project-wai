@@ -2,12 +2,11 @@
 Tests for Google Drive MCP integration.
 """
 import pytest
-import pytest_asyncio
 from unittest.mock import AsyncMock, patch
 from backend.integrations.google_drive import GoogleDriveAdapter, GoogleDriveConfig
 
 @pytest.fixture
-def mock_config():
+async def mock_config():
     return GoogleDriveConfig(
         base_url="https://test-mcp.example.com",
         api_key="test-api-key",
@@ -15,7 +14,7 @@ def mock_config():
     )
 
 @pytest.fixture
-def mock_adapter(mock_config):
+async def mock_adapter(mock_config):
     return GoogleDriveAdapter(mock_config)
 
 @pytest.mark.asyncio
