@@ -46,6 +46,6 @@ class GoogleDriveAdapter:
                 json={"query": query}
             )
             response.raise_for_status()
-            return response.json()
+            return await response.json()
         except Exception as e:
             raise Exception(f"Google Drive search error: {str(e)}")

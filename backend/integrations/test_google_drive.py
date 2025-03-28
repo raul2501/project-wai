@@ -76,7 +76,3 @@ async def test_search_documents_success(mock_adapter):
             "/v1/documents/search",
             json={"query": test_query}
         )
-        mock_post.assert_called_once_with(
-            "/v1/documents/search",
-            json={"query": test_query}
-        )
