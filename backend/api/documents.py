@@ -61,7 +61,7 @@ async def process_document_endpoint(request: DocumentRequest):
             ai_response = "No content to analyze"
         
         return DocumentResponse(
-            content=formatted_content[:1000] + "..." if len(formatted_content) > 1000 else formatted_content,
+            content=content[:1000] + "..." if len(content) > 1000 else content,
             ai_response=ai_response
         )
     
