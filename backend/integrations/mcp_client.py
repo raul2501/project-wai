@@ -34,14 +34,23 @@ class MCPClient:
         Returns:
             Dictionary containing documents and metadata
         """
-        try:
-            response = await self.client.post(
-                f"/v1/{source}/documents",
-                json=params
-            )
-            response.raise_for_status()
-            return response.json()
-        except Exception as e:
-            raise Exception(f"MCP {source} error: {str(e)}")
+        if source == "google-drive":
+            from backend.integrations.google_drive import GoogleDriveAdapter
+            adapter = GoogleDriveAdapter(GoogleDriveConfig(
+                base_url=f"{self.config.base_url}/google-drive",
+                api_key=self.config.api_key,
+                timeout=self.config.timeout
+            ))
+            return await adapter.get_document(params["document_id"])
+        else:
+            try:
+                response = await self.client.post(
+                    f"/v1/{source}/documents",
+                    json=params
+                )
+                response.raise_for_status()
+                return response.json()
+            except Exception as e:
+                raise Exception(f"MCP {source} error: {str(e)}")
 
     # Add other MCP methods as needed
