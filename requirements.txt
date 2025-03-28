@@ -6,8 +6,8 @@ pydantic>=2.0.0
 # Notion API
 notion-client>=2.0.0
 
-# Google MCP Integration
-google-drive-mcp-client>=1.0.0  # This would be your MCP service's client library
+# Google API Client (we'll use this temporarily)
+google-api-python-client>=2.0.0
 
 # AI API client
 openai>=1.0.0  # Or your preferred AI service SDK
