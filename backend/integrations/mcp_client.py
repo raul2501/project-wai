@@ -1,5 +1,5 @@
 """
-MCP (Microservice Control Plane) Client for Wai.
+MCP (Model Context Processor) Client for Wai.
 Provides unified interface to various MCP integrations.
 """
 from typing import Dict, Any, Optional
