@@ -102,3 +102,48 @@ async def batch_process_documents(requests: List[DocumentRequest]):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing documents: {str(e)}")
+
+@router.get ("/list")
+async def list_files_endpoint(
+    source: str,
+    folder_id: Optional[str] = Query(None, description="ID of the folder to list files from")
+):
+    """
+    List files from the specified MCP integration.
+    
+    Args:
+        source: Integration type (e.g. 'google-drive')
+        folder_id: ID of the folder to list files from (optional)
+        
+    Returns:
+        List of files and their metadata
+    """
+    try:
+        files = await mcp_client.list_files(source, {"folder_id": folder_id})
+        return {"files": files}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error listing files: {str(e)}")
+    
+
+@router.get("/metadata")
+async def get_metadata_endpoint(
+    source: str,
+    file_id: str
+):
+    """
+    Fetch metadata for a specific file from the specified MCP integration.
+    
+    Args:
+        source: Integration type (e.g., 'google-drive')
+        file_id: ID of the file to fetch metadata for
+        
+    Returns:
+        File metadata
+    """
+    try:
+        metadata = await mcp_client.get_metadata(source, {"file_id": file_id})
+        return {"metadata": metadata}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching metadata: {str(e)}")

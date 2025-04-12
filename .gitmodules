@@ -1,0 +1,3 @@
+[submodule "mcp-connect"]
+	path = mcp-connect
+	url = https://github.com/EvalsOne/MCP-connect.git
